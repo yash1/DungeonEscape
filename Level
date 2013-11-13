@@ -1,0 +1,43 @@
+public class Level
+{
+
+    private Location currentLocation;
+    private Location start;
+    private Location goal;
+    private ENUMERATED[][] dungeon;
+    private int size;
+    
+    
+    // ----------------------------------------------------------
+    /**
+     * Create a new Level object.
+     * @param size the size of the level
+     */
+    public Level(int size)
+    {
+        dungeon = new ENUMERATED[size][size];
+        this.size = size;
+        
+        for (int i = 1; i < size - 1; i++)
+        {
+            for (int j = 1; j < size - 1; j++)
+            {
+                dungeon[i][j] = ENUMERATED.OPEN_PATH;
+            }
+        }
+        
+        for (int i = 0; i < size; i++)
+        {
+            dungeon[i][0] = ENUMERATED.WALL;
+            dungeon[i][size - 1] = ENUMERATED.WALL;
+            dungeon[0][i] = ENUMERATED.WALL;
+            dungeon[size - 1][i] = ENUMERATED.WALL;
+        }
+        
+        start = new Location(0, 0);
+        goal = new Location(size - 1, size - 1);
+        setCell(start, ENUMERATED.OPEN_PATH);
+        setCell(goal, ENUMERATED.OPEN_PATH);
+    }
+
+}
