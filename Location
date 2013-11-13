@@ -1,0 +1,135 @@
+/**
+ * Location is an object that holds a location value, consisting of an x and y
+ * coordinate, to represent a place on the maze. Locations are immutable; in
+ * order to change a location you must simply create a new location object at
+ * the updated position.
+ *
+ * @author Joe Bruzek (jbruzek)
+ * @version 2013.10.03
+ */
+public class Location
+{
+    private int x;
+    private int y;
+
+
+    /**
+     * Location class takes an x and y components to define the postion in the
+     * maze
+     *
+     * @param x
+     *            the x coordinate of the location
+     * @param y
+     *            the y coordinate of the location
+     */
+    public Location(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+
+    /**
+     * equals returns true if the compared object is both a location object and
+     * has the same coordinates as the current location
+     *
+     * @param other
+     *            the location being compared
+     * @return whether or not the locations are equal
+     */
+
+    public boolean equals(Object other)
+    {
+        return ((other instanceof Location) &&
+            ((Location)other).x() == x && ((Location)other).y() == y);
+    }
+
+
+    /**
+     * toString returns the location object in a neat coordinate notation like
+     * "(x, y)".
+     *
+     * @return the string of the location
+     */
+
+    public String toString()
+    {
+        return ("(" + Integer.toString(x) + ", " + Integer.toString(y) + ")");
+    }
+
+
+    /**
+     * East returns a location object that is one block to the east of the
+     * current location
+     *
+     * @return a location object to the East
+     */
+
+    public Location east()
+    {
+        return new Location(x + 1, y);
+    }
+
+
+    /**
+     * North returns a location object that is one block to the north of the
+     * current location
+     *
+     * @return a location object to the north
+     */
+
+    public Location north()
+    {
+        return new Location(x, y - 1);
+    }
+
+
+    /**
+     * South returns a location object that is one block to the south of the
+     * current location
+     *
+     * @return a location object to the south
+     */
+
+    public Location south()
+    {
+        return new Location(x, y + 1);
+    }
+
+
+    /**
+     * West returns a location object that is one block to the west of the
+     * current location
+     *
+     * @return a location object to the west
+     */
+
+    public Location west()
+    {
+        return new Location(x - 1, y);
+    }
+
+
+    /**
+     * X returns the x coordinate of the current location
+     *
+     * @return the location's x coordinate
+     */
+
+    public int x()
+    {
+        return x;
+    }
+
+
+    /**
+     * Y returns the y coordinate of the current location
+     *
+     * @return the location's y coordinate
+     */
+
+    public int y()
+    {
+        return y;
+    }
+}
