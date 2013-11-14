@@ -1,0 +1,124 @@
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+// -------------------------------------------------------------------------
+/**
+ * This tests the Location method
+ *
+ * @author Yash Pant (yash1)
+ * @version 2013.30.9
+ */
+public class LocationTest
+{
+    private Location test = new Location(1, 1);
+
+
+    // ----------------------------------------------------------
+    /**
+     * Tests the constructor.
+     */
+
+    public void testLocation()
+    {
+
+        assertEquals(1, test.x());
+        assertEquals(1, test.y());
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Tests the east() method
+     */
+    @Test
+    public void testEast()
+    {
+        Location east = new Location(2, 1);
+        assertEquals(east, test.east());
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Tests the west() method
+     */
+    @Test
+    public void testWest()
+    {
+        Location west = new Location(0, 1);
+        assertEquals(west, test.west());
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Tests the north() method
+     */
+    @Test
+    public void testNorth()
+    {
+        Location north = new Location(1, 0);
+        assertEquals(north, test.north());
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Tests the south() method
+     */
+    @Test
+    public void testSouth()
+    {
+        Location south = new Location(1, 2);
+        assertEquals(south, test.south());
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Tests the x getter method
+     */
+    @Test
+    public void testX()
+    {
+        assertEquals(1, test.x());
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * tests the y getter method
+     */
+    @Test
+    public void testY()
+    {
+        assertEquals(1, test.y());
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Tests the equals method()
+     */
+    @Test
+    public void testEquals()
+    {
+        String s = "hi";
+        assertEquals(true, test.equals(new Location(1, 1)));
+        assertNotNull(test);
+        assertFalse(test.equals(s));
+        assertFalse(test.equals(new Location(0, 0)));
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * tests the toString() method.
+     */
+    @Test
+    public void testToString()
+    {
+        assertEquals("(1, 1)", test.toString());
+    }
+
+}
