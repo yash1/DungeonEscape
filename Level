@@ -39,5 +39,66 @@ public class Level
         setCell(start, ENUMERATED.OPEN_PATH);
         setCell(goal, ENUMERATED.OPEN_PATH);
     }
+    
+    public void placeWalls(Location loc)
+    {
+        if (!loc.equals(start) && !loc.equals(goal))
+        {
+            dungeon[loc.x()][loc.y()] = ENUMERATED.WALL;
+        }
+    }
+    
+    public void removeWalls(Location loc)
+    {
+        if (dungeon[loc.x()][loc.y()] == ENUMERATED.WALL)
+        {
+            dungeon[loc.x()][loc.y()] = ENUMERATED.OPEN_PATH;
+        }
+    }
+    
+    public void setCell(Location loc, ENUMERATED cell)
+    {
+        if (!loc.equals(start) && !loc.equals(goal))
+        {
+            dungeon[loc.x()][loc.y()] = cell;
+        }
+    }
+    
+    public void setGoal(Location loc)
+    {
+        if (getCell(loc) != ENUMERATED.WALL && 
+            getCell(loc) != ENUMERATED.HAZARD)
+        {
+            goal = loc;
+        }
+    }
+    
+    public void setStart(Location loc)
+    {
+        if (getCell(loc) != ENUMERATED.WALL && 
+            getCell(loc) != ENUMERATED.HAZARD)
+        {
+            start = loc;
+        }
+    }
+    
+    public ENUMERATED getCell(Location loc)
+    {
+        return dungeon[loc.x()][loc.y()];
+    }
+    
+    public void restart()
+    {
+        for (int i = 1; i < size - 1; i++)
+        {
+            for (int j = 1; j < size - 1; j++)
+            {
+                if (dungeon[i][j] == ENUMERATED.CURRENT_PATH)
+                    {
+                        dungeon[i][j] = ENUMERATED.OPEN_PATH;
+                    }
+            }
+        }
+    }
 
 }
