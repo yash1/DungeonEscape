@@ -1,0 +1,322 @@
+
+ import student.TestCase;
+
+
+
+ // -------------------------------------------------------------------------
+
+ /**
+
+  * Tests for the {@link DoublyLinkedDeque} class.
+
+  *
+
+  * @author John Sok (john50k)
+
+  * @author Yash Pant (yash1)
+
+  * @version 2013.10.25
+
+  */
+
+ public class DoublyLinkedDequeTest
+
+  extends TestCase {
+
+
+
+  // ~ Instance/static variables .............................................
+
+
+
+  private Deque<String> deque;
+
+
+
+
+
+  // ~ Constructor ...........................................................
+
+
+
+  // ----------------------------------------------------------
+
+  /**
+
+   * Create a new test class
+
+   */
+
+  public DoublyLinkedDequeTest()
+
+  {
+
+      // The constructor is usually empty in unit tests, since it runs
+
+      // once for the whole class, not once for each test method.
+
+      // Per-test initialization should be placed in setUp() instead.
+
+  }
+
+
+
+
+
+  // ~ Public methods ........................................................
+
+
+
+  // ----------------------------------------------------------
+
+  /**
+
+   * Creates two brand new, empty sets for each test method.
+
+   */
+
+  public void setUp()
+
+  {
+
+      deque = new DoublyLinkedDeque<String>();
+
+  }
+
+
+
+
+
+  // ----------------------------------------------------------
+
+  /**
+
+   * tests size method
+
+   */
+
+  public void testSize()
+
+  {
+
+      assertEquals(deque.size(), 0);
+
+      deque.enqueueAtFront("asdf");
+
+      assertEquals(deque.size(), 1);
+
+  }
+
+
+
+
+
+  // ----------------------------------------------------------
+
+  /**
+
+   * tests frontItem method
+
+   */
+
+  public void testFrontItem()
+
+  {
+
+      deque.enqueueAtFront("asdf");
+
+      assertEquals(deque.frontItem(), "asdf");
+
+  }
+
+
+
+
+
+  // ----------------------------------------------------------
+
+  /**
+
+   * tests rearItem method
+
+   */
+
+  public void testRearItem()
+
+  {
+
+      deque.enqueueAtRear("asdf");
+
+      assertEquals(deque.rearItem(), "asdf");
+
+  }
+
+
+
+
+
+  // ----------------------------------------------------------
+
+  /**
+
+   * tests enqueueAtFront method
+
+   */
+
+  public void testEnqueueAtFront()
+
+  {
+
+      deque.enqueueAtFront("asdf");
+
+      assertEquals(deque.frontItem(), "asdf");
+
+      deque.enqueueAtFront("ghjk");
+
+      assertEquals(deque.frontItem(), "ghjk");
+
+  }
+
+
+
+
+
+  // ----------------------------------------------------------
+
+  /**
+
+   * tests enqueueAtRear method
+
+   */
+
+  public void testEnqueueAtRear()
+
+  {
+
+      deque.enqueueAtRear("asdf");
+
+      assertEquals(deque.rearItem(), "asdf");
+
+     deque.enqueueAtRear("ghjk");
+
+     assertEquals(deque.rearItem(), "ghjk");
+
+ }
+
+
+
+
+
+ // ----------------------------------------------------------
+
+ /**
+
+  * tests dequeueAtFront method
+
+  */
+
+ public void testDequeueAtFront()
+
+ {
+
+     deque.enqueueAtFront("asdf");
+
+     deque.enqueueAtFront("ghjk");
+
+     deque.dequeueAtFront();
+
+     assertEquals(deque.frontItem(), "asdf");
+
+     deque.dequeueAtFront();
+
+     assertEquals(deque.size(), 0);
+
+ }
+
+
+
+
+
+ // ----------------------------------------------------------
+
+ /**
+
+  * tests dequeueAtRear method
+
+  */
+
+ public void testDequeueAtRear()
+
+ {
+
+     deque.enqueueAtRear("asdf");
+
+     deque.enqueueAtRear("ghjk");
+
+     deque.dequeueAtRear();
+
+     assertEquals(deque.rearItem(), "asdf");
+
+     deque.dequeueAtRear();
+
+     assertEquals(deque.size(), 0);
+
+ }
+
+
+
+
+
+ // ----------------------------------------------------------
+
+ /**
+
+  * tests clear method
+
+  */
+
+ public void testClear()
+
+ {
+
+     assertEquals(deque.size(), 0);
+
+     deque.enqueueAtRear("asdf");
+
+     deque.enqueueAtRear("ghjk");
+
+     deque.clear();
+
+     assertEquals(deque.size(), 0);
+
+ }
+
+
+
+
+
+ // ----------------------------------------------------------
+
+ /**
+
+  * tests toString method
+
+  */
+
+ public void testToString()
+
+ {
+
+     assertEquals("[]", deque.toString());
+
+     deque.enqueueAtFront("asdf");
+
+     deque.enqueueAtRear("ghjk");
+
+     assertEquals("[asdf, ghjk]", deque.toString());
+
+ }
+
+
+
+ }
