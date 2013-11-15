@@ -1,0 +1,27 @@
+
+// -------------------------------------------------------------------------
+/**
+ *  This is the enumeration for the cells
+ *
+ *  @author Yash
+ *  @version Nov 14, 2013
+ */
+public enum Cell
+{
+    /**
+     * represents an open path on the level
+     */
+    OPEN_PATH,
+    /**
+     * represents a wall on the level
+     */
+    WALL,
+    /**
+     * reperesents a hazard on the level
+     */
+    HAZARD,
+    /**
+     * represents the current path of the user
+     */
+    CURRENT_PATH;
+}
