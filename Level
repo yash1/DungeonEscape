@@ -111,28 +111,91 @@ public class Level
     }
 
 
-    public Location east()
+    public void east()
     {
-        //TODO: Implement this
-        return null;
+        int x = currentLocation.x();
+        int y = currentLocation.y();
+        boolean temp = true;
+
+        while (temp)
+        {
+            Cell next = getCell(new Location(x + 1, y));
+            if (next != Cell.HAZARD && next != Cell.WALL)
+            {
+                path.enqueueAtFront(new Location(x + 1, y));
+                x++;
+            }
+            else
+            {
+                temp = false;
+            }
+        }
     }
 
-    public Location west()
+
+    public void west()
     {
-      //TODO: Implement this
-        return null;
+        int x = currentLocation.x();
+        int y = currentLocation.y();
+        boolean temp = true;
+
+        while (temp)
+        {
+            Cell next = getCell(new Location(x - 1, y));
+            if (next != Cell.HAZARD && next != Cell.WALL)
+            {
+                path.enqueueAtFront(new Location(x - 1, y));
+                x--;
+            }
+            else
+            {
+                temp = false;
+            }
+        }
     }
 
-    public Location north()
+
+    public void north()
     {
-      //TODO: Implement this
-        return null;
+        int x = currentLocation.x();
+        int y = currentLocation.y();
+        boolean temp = true;
+
+        while (temp)
+        {
+            Cell next = getCell(new Location(x, y - 1));
+            if (next != Cell.HAZARD && next != Cell.WALL)
+            {
+                path.enqueueAtFront(new Location(x, y - 1));
+                y--;
+            }
+            else
+            {
+                temp = false;
+            }
+        }
     }
 
-    public Location south()
+
+    public void south()
     {
-      //TODO: Implement this
-        return null;
+        int x = currentLocation.x();
+        int y = currentLocation.y();
+        boolean temp = true;
+
+        while (temp)
+        {
+            Cell next = getCell(new Location(x, y + 1));
+            if (next != Cell.HAZARD && next != Cell.WALL)
+            {
+                path.enqueueAtFront(new Location(x, y + 1));
+                y++;
+            }
+            else
+            {
+                temp = false;
+            }
+        }
     }
 
 }
