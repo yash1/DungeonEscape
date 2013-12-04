@@ -6,6 +6,7 @@ public class Level
     private Location goal;
     private Cell[][] dungeon;
     private int      size;
+    private DoublyLinkedDeque<Location> path;
 
 
     // ----------------------------------------------------------
@@ -37,9 +38,12 @@ public class Level
         }
 
         start = new Location(0, 0);
+        currentLocation = start;
         goal = new Location(size - 1, size - 1);
         setCell(start, Cell.OPEN_PATH);
         setCell(goal, Cell.OPEN_PATH);
+        path = new DoublyLinkedDeque<Location>();
+        path.enqueueAtFront(currentLocation);
     }
 
 
@@ -49,6 +53,34 @@ public class Level
         {
             dungeon[loc.x()][loc.y()] = Cell.WALL;
         }
+    }
+
+    /**
+     * set the current location
+     * @param loc the location to be the new current
+     */
+    public void setCurrentLocation(Location loc)
+    {
+        currentLocation = loc;
+        path.enqueueAtFront(loc);
+    }
+
+    /**
+     * return the current location in a location object
+     * @return the current location
+     */
+    public Location getCurrentLocation()
+    {
+        return currentLocation;
+    }
+
+    /**
+     * return the deque that holds the path of the dungeon explorer
+     * @return the path through the dungeon
+     */
+    public DoublyLinkedDeque getPath()
+    {
+        return path;
     }
 
 
@@ -84,6 +116,8 @@ public class Level
         if (getCell(loc) != Cell.WALL && getCell(loc) != Cell.HAZARD)
         {
             start = loc;
+            path.clear();
+            setCurrentLocation(loc);
         }
     }
 
@@ -122,11 +156,12 @@ public class Level
             Cell next = getCell(new Location(x + 1, y));
             if (next != Cell.HAZARD && next != Cell.WALL)
             {
-                path.enqueueAtFront(new Location(x + 1, y));
                 x++;
             }
             else
             {
+                path.enqueueAtFront(new Location(x, y));
+                currentLocation = new Location(x, y);
                 temp = false;
             }
         }
@@ -144,11 +179,12 @@ public class Level
             Cell next = getCell(new Location(x - 1, y));
             if (next != Cell.HAZARD && next != Cell.WALL)
             {
-                path.enqueueAtFront(new Location(x - 1, y));
                 x--;
             }
             else
             {
+                path.enqueueAtFront(new Location(x, y));
+                currentLocation = new Location(x, y);
                 temp = false;
             }
         }
@@ -166,11 +202,12 @@ public class Level
             Cell next = getCell(new Location(x, y - 1));
             if (next != Cell.HAZARD && next != Cell.WALL)
             {
-                path.enqueueAtFront(new Location(x, y - 1));
                 y--;
             }
             else
             {
+                path.enqueueAtFront(new Location(x, y));
+                currentLocation = new Location(x, y);
                 temp = false;
             }
         }
@@ -188,11 +225,12 @@ public class Level
             Cell next = getCell(new Location(x, y + 1));
             if (next != Cell.HAZARD && next != Cell.WALL)
             {
-                path.enqueueAtFront(new Location(x, y + 1));
                 y++;
             }
             else
             {
+                path.enqueueAtFront(new Location(x, y));
+                currentLocation = new Location(x, y);
                 temp = false;
             }
         }
