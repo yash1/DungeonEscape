@@ -1,0 +1,93 @@
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+public class LevelTest
+{
+
+    Level level;
+
+
+    /**
+     * set up a level and put the starting cell right in the center
+     */
+    @Before
+    public void setUp()
+    {
+        level = new Level(7);
+        level.setStart(new Location(3, 3));
+    }
+
+
+    /**
+     * Test the east method the current cell should be the farthest east clear
+     * cell the top cell in the path should be the current cell the second cell
+     * in the path should be the starting position
+     */
+    @Test
+    public void testEast()
+    {
+        level.east();
+
+        Location test = new Location(5, 3);
+        Location test2 = new Location(3, 3);
+        assertEquals(test, level.getCurrentLocation());
+        assertEquals(test, level.getPath().dequeueAtFront());
+        assertEquals(test2, level.getPath().dequeueAtFront());
+    }
+
+
+    /**
+     * Test the west method the current cell should be the farthest west clear
+     * cell the top cell in the path should be the current cell the second cell
+     * in the path should be the starting position
+     */
+    @Test
+    public void testWest()
+    {
+        level.west();
+
+        Location test = new Location(1, 3);
+        Location test2 = new Location(3, 3);
+        assertEquals(test, level.getCurrentLocation());
+        assertEquals(test, level.getPath().dequeueAtFront());
+        assertEquals(test2, level.getPath().dequeueAtFront());
+    }
+
+
+    /**
+     * Test the north method the current cell should be the farthest north clear
+     * cell the top cell in the path should be the current cell the second cell
+     * in the path should be the starting position
+     */
+    @Test
+    public void testNorth()
+    {
+        level.north();
+
+        Location test = new Location(3, 1);
+        Location test2 = new Location(3, 3);
+        assertEquals(test, level.getCurrentLocation());
+        assertEquals(test, level.getPath().dequeueAtFront());
+        assertEquals(test2, level.getPath().dequeueAtFront());
+    }
+
+
+    /**
+     * Test the south method the current cell should be the farthest south clear
+     * cell the top cell in the path should be the current cell the second cell
+     * in the path should be the starting position
+     */
+    @Test
+    public void testSouth()
+    {
+        level.south();
+
+        Location test = new Location(3, 5);
+        Location test2 = new Location(3, 3);
+        assertEquals(test, level.getCurrentLocation());
+        assertEquals(test, level.getPath().dequeueAtFront());
+        assertEquals(test2, level.getPath().dequeueAtFront());
+    }
+
+}
