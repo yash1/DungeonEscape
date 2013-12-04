@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------
+/**
+ *  Level handles all of the data manipulation of the dungeon escape game
+ *  In the MVC architecture, Level is the controller
+ *
+ *  @author Joe Bruzek, Yash Pant, Marcus Stewart
+ *  @version Dec 4, 2013
+ */
 public class Level
 {
 
@@ -46,7 +54,10 @@ public class Level
         path.enqueueAtFront(currentLocation);
     }
 
-
+    /**
+     * place a wall at the location
+     * @param loc the location to place a new wall
+     */
     public void placeWalls(Location loc)
     {
         if (!loc.equals(start) && !loc.equals(goal))
@@ -83,7 +94,11 @@ public class Level
         return path;
     }
 
-
+    /**
+     * remove the wall at the current location
+     * if there is no wall, nothing happens
+     * @param loc the location to remove the walls at
+     */
     public void removeWalls(Location loc)
     {
         if (dungeon[loc.x()][loc.y()] == Cell.WALL)
@@ -92,7 +107,12 @@ public class Level
         }
     }
 
-
+    /**
+     * set the cell to a specific cell value
+     * If the cell is the start or the goal, nothing happens
+     * @param loc the location to have the cell changed
+     * @param cell the cell value for the location to be changed to
+     */
     public void setCell(Location loc, Cell cell)
     {
         if (!loc.equals(start) && !loc.equals(goal))
@@ -101,7 +121,11 @@ public class Level
         }
     }
 
-
+    /**
+     * set the goal location
+     * cannot be a wall or a hazard
+     * @param loc the location to place the goal
+     */
     public void setGoal(Location loc)
     {
         if (getCell(loc) != Cell.WALL && getCell(loc) != Cell.HAZARD)
@@ -110,7 +134,11 @@ public class Level
         }
     }
 
-
+    /**
+     * set the start location
+     * cannot be a wall or a hazard
+     * @param loc the location to place the start
+     */
     public void setStart(Location loc)
     {
         if (getCell(loc) != Cell.WALL && getCell(loc) != Cell.HAZARD)
@@ -121,13 +149,20 @@ public class Level
         }
     }
 
-
+    /**
+     * get the value of the cell at the location
+     * @param loc the location to get the cell value
+     */
     public Cell getCell(Location loc)
     {
         return dungeon[loc.x()][loc.y()];
     }
 
-
+    /**
+     * restart the dungeon level
+     * all path is removed and changed to open path
+     * start and goal are reset to their original locations
+     */
     public void restart()
     {
         for (int i = 1; i < size - 1; i++)
@@ -144,7 +179,10 @@ public class Level
         setStart(start);
     }
 
-
+    /**
+     * move to the east
+     * adds the farthest east cell that can be moved to to the top of the path
+     */
     public void east()
     {
         int x = currentLocation.x();
@@ -167,7 +205,10 @@ public class Level
         }
     }
 
-
+    /**
+     * move to the west
+     * adds the farthest west cell that can be moved to to the top of the path
+     */
     public void west()
     {
         int x = currentLocation.x();
@@ -190,7 +231,10 @@ public class Level
         }
     }
 
-
+    /**
+     * move to the north
+     * adds the farthest north cell that can be moved to to the top of the path
+     */
     public void north()
     {
         int x = currentLocation.x();
@@ -213,7 +257,10 @@ public class Level
         }
     }
 
-
+    /**
+     * move to the south
+     * adds the farthest south cell that can be moved to to the top of the path
+     */
     public void south()
     {
         int x = currentLocation.x();
