@@ -89,7 +89,7 @@ public class Level
      * return the deque that holds the path of the dungeon explorer
      * @return the path through the dungeon
      */
-    public DoublyLinkedDeque getPath()
+    public DoublyLinkedDeque<Location> getPath()
     {
         return path;
     }
