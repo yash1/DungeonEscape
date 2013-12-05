@@ -40,6 +40,7 @@ public class CircularLinkedList<T>
 
     /**
      * add an element behind a specific node
+     * makes the new node the current node
      * @param node the node to be added behind
      * @param data the data of the new node
      */
@@ -48,6 +49,7 @@ public class CircularLinkedList<T>
         Node<T> newNode = new Node<T>(data);
         newNode.join(node.split());
         node.join(newNode);
+        current = newNode;
         size++;
     }
 
