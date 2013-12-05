@@ -1,26 +1,26 @@
 // -------------------------------------------------------------------------
 /**
- *  Level handles all of the data manipulation of the dungeon escape game
- *  In the MVC architecture, Level is the controller
- *
- *  @author Joe Bruzek, Yash Pant, Marcus Stewart
- *  @version Dec 4, 2013
+ * Level handles all of the data manipulation of the dungeon escape game In the
+ * MVC architecture, Level is the controller
+ * 
+ * @author Joe Bruzek, Yash Pant, Marcus Stewart
+ * @version Dec 4, 2013
  */
 public class Level
 {
 
-    private Location currentLocation;
-    private Location start;
-    private Location goal;
-    private Cell[][] dungeon;
-    private int      size;
+    private Location                    currentLocation;
+    private Location                    start;
+    private Location                    goal;
+    private Cell[][]                    dungeon;
+    private int                         size;
     private DoublyLinkedDeque<Location> path;
 
 
     // ----------------------------------------------------------
     /**
      * Create a new Level object.
-     *
+     * 
      * @param size
      *            the size of the level
      */
@@ -54,9 +54,12 @@ public class Level
         path.enqueueAtFront(currentLocation);
     }
 
+
     /**
      * place a wall at the location
-     * @param loc the location to place a new wall
+     * 
+     * @param loc
+     *            the location to place a new wall
      */
     public void placeWalls(Location loc)
     {
@@ -66,9 +69,12 @@ public class Level
         }
     }
 
+
     /**
      * set the current location
-     * @param loc the location to be the new current
+     * 
+     * @param loc
+     *            the location to be the new current
      */
     public void setCurrentLocation(Location loc)
     {
@@ -76,8 +82,10 @@ public class Level
         path.enqueueAtFront(loc);
     }
 
+
     /**
      * return the current location in a location object
+     * 
      * @return the current location
      */
     public Location getCurrentLocation()
@@ -85,8 +93,10 @@ public class Level
         return currentLocation;
     }
 
+
     /**
      * return the deque that holds the path of the dungeon explorer
+     * 
      * @return the path through the dungeon
      */
     public DoublyLinkedDeque<Location> getPath()
@@ -94,10 +104,13 @@ public class Level
         return path;
     }
 
+
     /**
-     * remove the wall at the current location
-     * if there is no wall, nothing happens
-     * @param loc the location to remove the walls at
+     * remove the wall at the current location if there is no wall, nothing
+     * happens
+     * 
+     * @param loc
+     *            the location to remove the walls at
      */
     public void removeWalls(Location loc)
     {
@@ -107,11 +120,15 @@ public class Level
         }
     }
 
+
     /**
-     * set the cell to a specific cell value
-     * If the cell is the start or the goal, nothing happens
-     * @param loc the location to have the cell changed
-     * @param cell the cell value for the location to be changed to
+     * set the cell to a specific cell value If the cell is the start or the
+     * goal, nothing happens
+     * 
+     * @param loc
+     *            the location to have the cell changed
+     * @param cell
+     *            the cell value for the location to be changed to
      */
     public void setCell(Location loc, Cell cell)
     {
@@ -121,10 +138,12 @@ public class Level
         }
     }
 
+
     /**
-     * set the goal location
-     * cannot be a wall or a hazard
-     * @param loc the location to place the goal
+     * set the goal location cannot be a wall or a hazard
+     * 
+     * @param loc
+     *            the location to place the goal
      */
     public void setGoal(Location loc)
     {
@@ -134,10 +153,12 @@ public class Level
         }
     }
 
+
     /**
-     * set the start location
-     * cannot be a wall or a hazard
-     * @param loc the location to place the start
+     * set the start location cannot be a wall or a hazard
+     * 
+     * @param loc
+     *            the location to place the start
      */
     public void setStart(Location loc)
     {
@@ -149,18 +170,21 @@ public class Level
         }
     }
 
+
     /**
      * get the value of the cell at the location
-     * @param loc the location to get the cell value
+     * 
+     * @param loc
+     *            the location to get the cell value
      */
     public Cell getCell(Location loc)
     {
         return dungeon[loc.x()][loc.y()];
     }
 
+
     /**
-     * restart the dungeon level
-     * all path is removed and changed to open path
+     * restart the dungeon level all path is removed and changed to open path
      * start and goal are reset to their original locations
      */
     public void restart()
@@ -179,9 +203,10 @@ public class Level
         setStart(start);
     }
 
+
     /**
-     * move to the east
-     * adds the farthest east cell that can be moved to to the top of the path
+     * move to the east adds the farthest east cell that can be moved to to the
+     * top of the path
      */
     public void east()
     {
@@ -205,9 +230,10 @@ public class Level
         }
     }
 
+
     /**
-     * move to the west
-     * adds the farthest west cell that can be moved to to the top of the path
+     * move to the west adds the farthest west cell that can be moved to to the
+     * top of the path
      */
     public void west()
     {
@@ -231,9 +257,10 @@ public class Level
         }
     }
 
+
     /**
-     * move to the north
-     * adds the farthest north cell that can be moved to to the top of the path
+     * move to the north adds the farthest north cell that can be moved to to
+     * the top of the path
      */
     public void north()
     {
@@ -257,9 +284,10 @@ public class Level
         }
     }
 
+
     /**
-     * move to the south
-     * adds the farthest south cell that can be moved to to the top of the path
+     * move to thesouth adds the farthest south cell that can be moved to to the
+     * top of the path
      */
     public void south()
     {
