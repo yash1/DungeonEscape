@@ -1,0 +1,89 @@
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * Test the CircularLinkedList
+ *
+ * @author Joe Bruzek, Yash Pant, Marcus Stewart
+ * @version Dec 5, 2013
+ */
+public class CircularLinkedListTest
+{
+
+    CircularLinkedList<String> test;
+
+
+    /**
+     * setup the list
+     */
+    @Before
+    public void setUp()
+    {
+        test = new CircularLinkedList<String>();
+    }
+
+
+    /**
+     * test the add method when the list is empty
+     */
+    @Test
+    public void testAdd1()
+    {
+        test.add("one");
+        assertEquals("one", test.getCurrent());
+        test.next();
+        assertEquals("one", test.getCurrent());
+    }
+
+
+    /**
+     * test the add method when the list is not empty
+     */
+    @Test
+    public void testAdd2()
+    {
+        test.add("one");
+        test.add("two");
+        test.add("three");
+        assertEquals("three", test.getCurrent());
+        test.next();
+        assertEquals("one", test.getCurrent());
+        test.add("test");
+        assertEquals("test", test.getCurrent());
+        test.previous();
+        assertEquals("one", test.getCurrent());
+    }
+
+
+    /**
+     * test the size method
+     */
+    @Test
+    public void testSize()
+    {
+        assertEquals(0, test.size());
+        test.add("one");
+        assertEquals(1, test.size());
+        test.add("two");
+        assertEquals(2, test.size());
+        test.remove();
+        assertEquals(1, test.size());
+    }
+
+
+    /**
+     * test the remove method
+     */
+    @Test
+    public void testRemove()
+    {
+        test.add("one");
+        test.add("two");
+        test.add("three");
+
+        test.remove();
+        assertEquals(2, test.size());
+        assertEquals("two", test.getCurrent());
+    }
+}
