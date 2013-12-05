@@ -1,0 +1,87 @@
+/**
+ * Circular linked list
+ *
+ * @author Joe Bruzek, Yash Pant, Marcus Stewart
+ * @version Dec 5, 2013
+ * @param <T> the type of data stored in the list
+ */
+public class CircularLinkedList<T>
+{
+    private Node<T> current;
+    private int size;
+
+    /**
+     * Create a new CircularLinkedList object.
+     */
+    public CircularLinkedList()
+    {
+        current = null;
+        size = 0;
+    }
+
+
+    /**
+     * add an element behind the current node
+     * @param data the data of the new node
+     */
+    public void add(T data)
+    {
+        if (size == 0)
+        {
+            current = new Node<T>(data);
+            current.join(current);
+        }
+        else
+        {
+            addBehind(current, data);
+        }
+        size++;
+    }
+
+    /**
+     * add an element behind a specific node
+     * @param node the node to be added behind
+     * @param data the data of the new node
+     */
+    public void addBehind(Node<T> node, T data)
+    {
+        Node<T> newNode = new Node<T>(data);
+        newNode.join(node.split());
+        node.join(newNode);
+        size++;
+    }
+
+    /**
+     * returns the data of the current node
+     * @return the data of the current node
+     */
+    public T getCurrent()
+    {
+        return current.data();
+    }
+
+    /**
+     * move the current node to the next node
+     */
+    public void next()
+    {
+        current = current.next();
+    }
+
+    /**
+     * move the current node to the previous node
+     */
+    public void previous()
+    {
+        current = current.previous();
+    }
+
+    /**
+     * return the size of the list
+     * @return the size of the list
+     */
+    public int size()
+    {
+        return size;
+    }
+}
