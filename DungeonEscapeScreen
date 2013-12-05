@@ -1,0 +1,106 @@
+import java.awt.Point;
+import java.awt.Button;
+
+// -------------------------------------------------------------------------
+/**
+ *  The screen
+ *
+ *  @author Joe Bruzek, Yash Pant, Marcus Stewart
+ *  @version Dec 5, 2013
+ */
+public class DungeonEscapeScreen
+{
+    Level level;
+    Button resetLevel;
+    private int levelNumber;
+
+    /**
+     * Create a new DungeonEscapeScreen object.
+     */
+    public DungeonEscapeScreen()
+    {
+        level = new Level(10);
+    }
+
+    /**
+     * return the level associated with the game
+     * @return the level
+     */
+    public Level getLevel()
+    {
+        return level;
+    }
+
+    /**
+     * animate
+     */
+    public void animate()
+    {
+        Location next = level.getPath().frontItem();
+        if (next != level.getCurrentLocation())
+        {
+            Point point = getCoordinates(next);
+
+            if (next.x() == level.getCurrentLocation().x())
+            {
+                //animate to point.y();
+            }
+            else
+            {
+                // animate to point.x();
+            }
+        }
+    }
+
+    /**
+     * get the x and y coordinates of a point on the screen by comparing to
+     * a location
+     *
+     * @param loc the location
+     * @return point the point on the screen
+     */
+    public Point getCoordinates(Location loc)
+    {
+        // To do -
+        // (location.x / size) * width of the level on the screen
+        // (location.y / size) * height of the level + buffer
+        // new Point with the above coordinates
+        return null;
+    }
+
+    /**
+     * reset the level
+     */
+    public void resetLevelClicked()
+    {
+        level.restart();
+    }
+
+    /**
+     * move to the next map
+     */
+
+    /**
+     * load the selected level
+     */
+    public void loadLevel(int number)
+    {
+        /*
+         * possibly make a circularly linked list to hold the levels
+         * in which case, we could have loadNext and loadPrevious methods
+         */
+        switch(number)
+        {
+            case 1:
+                // load level 1
+            case 2:
+                // load level 2
+            case 3:
+                // load level 3
+            case 4:
+                // load level 4
+            case 5:
+                // load level 5
+        }
+    }
+}
