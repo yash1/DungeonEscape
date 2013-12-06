@@ -1,0 +1,178 @@
+package com.cs2114.dungeonEscape;
+
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import sun.misc.IOUtils;
+import java.io.StringWriter;
+import java.io.InputStream;
+import android.content.res.AssetManager;
+import sofia.app.Screen;
+import java.awt.Point;
+import java.awt.Button;
+
+// -------------------------------------------------------------------------
+/**
+ * The screen
+ *
+ * @author Joe Bruzek, Yash Pant, Marcus Stewart
+ * @version Dec 5, 2013
+ */
+public class DungeonEscapeScreen
+    extends Screen
+{
+    private CircularLinkedList<Level> levelList;
+    private Level                     level;
+    private Button                    resetLevel;
+    private Button                    next;
+    private Button                    previous;
+    private int                       size;
+
+
+    /**
+     * Create a new DungeonEscapeScreen object.
+     */
+    public DungeonEscapeScreen()
+    {
+
+        levelList = new CircularLinkedList<Level>();
+
+        for (int i = 0; i < 5; i++)
+        {
+            levelList.add(new Level(getLevelString(i)));
+        }
+        levelList.next();
+
+        level = levelList.getCurrent();
+
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Returns a string representation of the level from text files
+     *
+     * @param i
+     * @return string that represents the level
+     */
+    public String getLevelString(int i)
+    {
+        String levelString = null;
+        String fileName;
+
+        switch (i)
+        {
+            case 0:
+                fileName = "level1.txt";
+            case 1:
+                fileName = "level2.txt";
+            case 2:
+                fileName = "level3.txt";
+            case 3:
+                fileName = "level4.txt";
+            case 4:
+                fileName = "level5.txt";
+        }
+        AssetManager am = getAssets();
+        try
+        {
+            InputStream is = am.open(levelString);
+            BufferedReader reader =
+                new BufferedReader(new InputStreamReader(is));
+            StringBuilder out = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                out.append(line);
+            }
+
+            levelString = out.toString();
+            reader.close();
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return levelString;
+
+    }
+
+
+    /**
+     * return the level associated with the game
+     *
+     * @return the level
+     */
+    public Level getLevel()
+    {
+        return level;
+    }
+
+
+    /**
+     * animate
+     */
+    public void animate()
+    {
+        Location destination = level.getPath().frontItem();
+        if (destination != level.getCurrentLocation())
+        {
+            Point point = getCoordinates(destination);
+
+            if (destination.x() == level.getCurrentLocation().x())
+            {
+                // animate to point.y();
+            }
+            else
+            {
+                // animate to point.x();
+            }
+        }
+    }
+
+
+    /**
+     * get the x and y coordinates of a point on the screen by comparing to a
+     * location
+     *
+     * @param loc
+     *            the location
+     * @return point the point on the screen
+     */
+    public Point getCoordinates(Location loc)
+    {
+        // To do -
+        // (location.x / size) * width of the level on the screen
+        // (location.y / size) * height of the level + buffer
+        // new Point with the above coordinates
+        return null;
+    }
+
+
+    /**
+     * reset the level
+     */
+    public void resetLevelClicked()
+    {
+        level.restart();
+    }
+
+
+    /**
+     * move to the next level
+     */
+    private void nextClicked()
+    {
+        levelList.next();
+        level = levelList.getCurrent();
+    }
+
+
+    /**
+     * move to the previous level
+     */
+    public void previousClicked()
+    {
+        levelList.previous();
+        level = levelList.getCurrent();
+    }
+}
