@@ -1,7 +1,6 @@
 // -------------------------------------------------------------------------
 /**
- * Level handles all of the data manipulation of the dungeon escape game In the
- * MVC architecture, Level is the controller
+ * Level handles all of the data manipulation of the dungeon escape game
  * 
  * @author Joe Bruzek, Yash Pant, Marcus Stewart
  * @version Dec 4, 2013
@@ -52,6 +51,22 @@ public class Level
         setCell(goal, Cell.OPEN_PATH);
         path = new DoublyLinkedDeque<Location>();
         path.enqueueAtFront(currentLocation);
+    }
+
+
+    /**
+     * secondary constructor is used for building levels
+     * 
+     * @param size
+     *            the size of the maze
+     * @param index
+     *            the level index
+     */
+    public Level(int size, int index)
+    {
+        this(size);
+
+        restart(index);
     }
 
 
@@ -186,21 +201,27 @@ public class Level
     /**
      * restart the dungeon level all path is removed and changed to open path
      * start and goal are reset to their original locations
+     * 
+     * @param index
+     *            the level to load
      */
-    public void restart()
+    public void restart(int index)
     {
-        for (int i = 1; i < size - 1; i++)
+        switch (index)
         {
-            for (int j = 1; j < size - 1; j++)
-            {
-                if (dungeon[i][j] == Cell.CURRENT_PATH)
-                {
-                    dungeon[i][j] = Cell.OPEN_PATH;
-                }
-            }
+            case 0:
+                level0();
+                break;
+            case 1:
+                level1();
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
         }
-        setGoal(goal);
-        setStart(start);
     }
 
 
@@ -286,8 +307,8 @@ public class Level
 
 
     /**
-     * move to thesouth adds the farthest south cell that can be moved to to the
-     * top of the path
+     * move to the south adds the farthest south cell that can be moved to to
+     * the top of the path
      */
     public void south()
     {
@@ -311,4 +332,13 @@ public class Level
         }
     }
 
+
+    /**
+     * the first level
+     */
+    public void level1()
+    {
+        setStart(new Location(1, 5));
+        setGoal(new Location(5, 1));
+    }
 }
