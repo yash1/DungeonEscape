@@ -2,11 +2,17 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+// -------------------------------------------------------------------------
+/**
+ *  Test the Level Class
+ *
+ *  @author Joe Bruzek, Yash Pant, Marcus Stewart
+ *  @version Dec 5, 2013
+ */
 public class LevelTest
 {
 
-    Level level;
-
+    private Level level;
 
     /**
      * set up a level and put the starting cell right in the center
@@ -32,8 +38,9 @@ public class LevelTest
         Location test = new Location(7, 4);
         Location test2 = new Location(4, 4);
         assertEquals(test, level.getCurrentLocation());
-        assertEquals(test, level.getPath().dequeueAtFront());
-        assertEquals(test2, level.getPath().dequeueAtFront());
+        level.getPath().tail();
+        assertEquals(test, level.getPath().previous());
+        assertEquals(test2, level.getPath().previous());
     }
 
 
@@ -50,8 +57,9 @@ public class LevelTest
         Location test = new Location(1, 4);
         Location test2 = new Location(4, 4);
         assertEquals(test, level.getCurrentLocation());
-        assertEquals(test, level.getPath().dequeueAtFront());
-        assertEquals(test2, level.getPath().dequeueAtFront());
+        level.getPath().tail();
+        assertEquals(test, level.getPath().previous());
+        assertEquals(test2, level.getPath().previous());
     }
 
 
@@ -68,8 +76,9 @@ public class LevelTest
         Location test = new Location(4, 1);
         Location test2 = new Location(4, 4);
         assertEquals(test, level.getCurrentLocation());
-        assertEquals(test, level.getPath().dequeueAtFront());
-        assertEquals(test2, level.getPath().dequeueAtFront());
+        level.getPath().tail();
+        assertEquals(test, level.getPath().previous());
+        assertEquals(test2, level.getPath().previous());
     }
 
 
@@ -86,8 +95,9 @@ public class LevelTest
         Location test = new Location(4, 7);
         Location test2 = new Location(4, 4);
         assertEquals(test, level.getCurrentLocation());
-        assertEquals(test, level.getPath().dequeueAtFront());
-        assertEquals(test2, level.getPath().dequeueAtFront());
+        level.getPath().tail();
+        assertEquals(test, level.getPath().previous());
+        assertEquals(test2, level.getPath().previous());
     }
 
 }
