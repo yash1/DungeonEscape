@@ -8,13 +8,13 @@
 public class Level
 {
 
-    private Location                    currentLocation;
-    private Location                    start;
-    private Location                    goal;
-    private Cell[][]                    dungeon;
-    private int                         size;
-    private DoublyLinkedDeque<Location> path;
-    private int                         index;
+    private Location                   currentLocation;
+    private Location                   start;
+    private Location                   goal;
+    private Cell[][]                   dungeon;
+    private int                        size;
+    private DoublyLinkedList<Location> path;
+    private int                        index;
 
 
     // ----------------------------------------------------------
@@ -50,8 +50,8 @@ public class Level
         goal = new Location(size - 1, size - 1);
         setCell(start, Cell.OPEN_PATH);
         setCell(goal, Cell.OPEN_PATH);
-        path = new DoublyLinkedDeque<Location>();
-        path.enqueueAtFront(currentLocation);
+        path = new DoublyLinkedList<Location>();
+        path.add(currentLocation);
     }
 
 
@@ -107,7 +107,7 @@ public class Level
     public void setCurrentLocation(Location loc)
     {
         currentLocation = loc;
-        path.enqueueAtFront(loc);
+        path.add(loc);
     }
 
 
@@ -123,11 +123,11 @@ public class Level
 
 
     /**
-     * return the deque that holds the path of the dungeon explorer
+     * return the list that holds the path of the dungeon explorer
      *
      * @return the path through the dungeon
      */
-    public DoublyLinkedDeque<Location> getPath()
+    public DoublyLinkedList<Location> getPath()
     {
         return path;
     }
@@ -204,6 +204,7 @@ public class Level
      *
      * @param loc
      *            the location to get the cell value
+     * @return the cell at the location
      */
     public Cell getCell(Location loc)
     {
@@ -260,7 +261,7 @@ public class Level
             }
             else
             {
-                path.enqueueAtFront(new Location(x, y));
+                path.add(new Location(x, y));
                 currentLocation = new Location(x, y);
                 temp = false;
             }
@@ -287,7 +288,7 @@ public class Level
             }
             else
             {
-                path.enqueueAtFront(new Location(x, y));
+                path.add(new Location(x, y));
                 currentLocation = new Location(x, y);
                 temp = false;
             }
@@ -314,7 +315,7 @@ public class Level
             }
             else
             {
-                path.enqueueAtFront(new Location(x, y));
+                path.add(new Location(x, y));
                 currentLocation = new Location(x, y);
                 temp = false;
             }
@@ -341,7 +342,7 @@ public class Level
             }
             else
             {
-                path.enqueueAtFront(new Location(x, y));
+                path.add(new Location(x, y));
                 currentLocation = new Location(x, y);
                 temp = false;
             }
