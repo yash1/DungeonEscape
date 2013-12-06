@@ -1,3 +1,5 @@
+package com.cs2114.dungeonEscape;
+
 // -------------------------------------------------------------------------
 /**
  * Level handles all of the data manipulation of the dungeon escape game
@@ -15,6 +17,7 @@ public class Level
     private int                        size;
     private DoublyLinkedList<Location> path;
     private int                        index;
+    private String                     level;
 
 
     // ----------------------------------------------------------
@@ -24,51 +27,39 @@ public class Level
      * @param size
      *            the size of the level
      */
-    public Level(int size)
+    public Level(String level)
     {
-        dungeon = new Cell[size][size];
-        this.size = size;
+        this.level = level;
+        this.size = 20;
+        dungeon = new Cell[20][20];
 
-        for (int i = 1; i < size - 1; i++)
+        for (int y = 0; y < 20; y++)
         {
-            for (int j = 1; j < size - 1; j++)
+            for (int x = 0; x < 20; x++)
             {
-                dungeon[i][j] = Cell.OPEN_PATH;
+                char current = level.charAt(x + y * 20);
+
+                if (current == '3')
+                {
+                    dungeon[x][y] = Cell.WALL;
+                }
+                else if (current == '2')
+                {
+                    dungeon[x][y] = Cell.HAZARD;
+                }
+                else if (current == '1')
+                {
+                    dungeon[x][y] = Cell.OPEN_PATH;
+                }
             }
         }
 
-        for (int i = 0; i < size; i++)
-        {
-            dungeon[i][0] = Cell.WALL;
-            dungeon[i][size - 1] = Cell.WALL;
-            dungeon[0][i] = Cell.WALL;
-            dungeon[size - 1][i] = Cell.WALL;
-        }
+        start = new Location(level.charAt(401), level.charAt(401));
+        goal = new Location(level.charAt(402), level.charAt(403));
 
-        start = new Location(0, 0);
         currentLocation = start;
-        goal = new Location(size - 1, size - 1);
-        setCell(start, Cell.OPEN_PATH);
-        setCell(goal, Cell.OPEN_PATH);
         path = new DoublyLinkedList<Location>();
         path.add(currentLocation);
-    }
-
-
-    /**
-     * secondary constructor is used for building levels
-     *
-     * @param size
-     *            the size of the maze
-     * @param index
-     *            the level index
-     */
-    public Level(int size, int index)
-    {
-        this(size);
-        this.index = index;
-
-        restart(index);
     }
 
 
@@ -221,24 +212,31 @@ public class Level
      */
     public void restart(int index)
     {
-        switch (index)
+        for (int y = 0; y < 20; y++)
         {
-            case 0:
-                level0();
-                break;
-            case 1:
-                level1();
-                break;
-            case 2:
-                level2();
-                break;
-            case 3:
-                level3();
-                break;
-            case 4:
-                level4();
-                break;
+            for (int x = 0; x < 20; x++)
+            {
+                char current = level.charAt(x + y * 20);
+
+                if (current == '3')
+                {
+                    dungeon[x][y] = Cell.WALL;
+                }
+                else if (current == '2')
+                {
+                    dungeon[x][y] = Cell.HAZARD;
+                }
+                else if (current == '1')
+                {
+                    dungeon[x][y] = Cell.OPEN_PATH;
+                }
+            }
         }
+
+        start = new Location(level.charAt(401), level.charAt(401));
+        goal = new Location(level.charAt(402), level.charAt(403));
+
+        currentLocation = start;
     }
 
 
@@ -350,48 +348,4 @@ public class Level
     }
 
 
-    /**
-     * Level 0
-     */
-    public void level0()
-    {
-        setStart(new Location(1, 5));
-        setGoal(new Location(5, 1));
-    }
-
-
-    /**
-     * Level 1
-     */
-    public void level1()
-    {
-        // implement level1
-    }
-
-
-    /**
-     * Level 2
-     */
-    public void level2()
-    {
-        // implement level2
-    }
-
-
-    /**
-     * Level 3
-     */
-    public void level3()
-    {
-        // implement level3
-    }
-
-
-    /**
-     * Level 4
-     */
-    public void level4()
-    {
-        // implement level4
-    }
 }
