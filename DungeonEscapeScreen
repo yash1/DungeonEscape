@@ -15,6 +15,7 @@ public class DungeonEscapeScreen
     private Button                    resetLevel;
     private Button                    next;
     private Button                    previous;
+    private int                       size;
 
 
     /**
@@ -23,7 +24,14 @@ public class DungeonEscapeScreen
     public DungeonEscapeScreen()
     {
         levelList = new CircularLinkedList<Level>();
-        level = new Level(10);
+
+        for (int i = 0; i < 5; i++)
+        {
+            levelList.add(new Level(size, i));
+        }
+        levelList.next();
+
+        level = levelList.getCurrent();
     }
 
 
@@ -92,33 +100,17 @@ public class DungeonEscapeScreen
      */
     private void nextClicked()
     {
-        loadNext();
+        levelList.next();
+        level = levelList.getCurrent();
     }
+
 
     /**
      * move to the previous level
      */
     public void previousClicked()
     {
-        loadPrevious();
-    }
-
-
-    /**
-     * load the next level
-     */
-    public void loadNext()
-    {
-        levelList.next();
-        // load levelList.getCurrent();
-    }
-
-    /**
-     * load the previous level
-     */
-    public void loadPrevious()
-    {
         levelList.previous();
-        // load levelList.getCurent();
+        level = levelList.getCurrent();
     }
 }
