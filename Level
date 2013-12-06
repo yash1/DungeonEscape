@@ -1,7 +1,7 @@
 // -------------------------------------------------------------------------
 /**
  * Level handles all of the data manipulation of the dungeon escape game
- * 
+ *
  * @author Joe Bruzek, Yash Pant, Marcus Stewart
  * @version Dec 4, 2013
  */
@@ -14,12 +14,13 @@ public class Level
     private Cell[][]                    dungeon;
     private int                         size;
     private DoublyLinkedDeque<Location> path;
+    private int                         index;
 
 
     // ----------------------------------------------------------
     /**
      * Create a new Level object.
-     * 
+     *
      * @param size
      *            the size of the level
      */
@@ -56,7 +57,7 @@ public class Level
 
     /**
      * secondary constructor is used for building levels
-     * 
+     *
      * @param size
      *            the size of the maze
      * @param index
@@ -65,14 +66,26 @@ public class Level
     public Level(int size, int index)
     {
         this(size);
+        this.index = index;
 
         restart(index);
     }
 
 
     /**
+     * return the index of the current maze
+     *
+     * @return the index of the maze
+     */
+    public int getIndex()
+    {
+        return index;
+    }
+
+
+    /**
      * place a wall at the location
-     * 
+     *
      * @param loc
      *            the location to place a new wall
      */
@@ -87,7 +100,7 @@ public class Level
 
     /**
      * set the current location
-     * 
+     *
      * @param loc
      *            the location to be the new current
      */
@@ -100,7 +113,7 @@ public class Level
 
     /**
      * return the current location in a location object
-     * 
+     *
      * @return the current location
      */
     public Location getCurrentLocation()
@@ -111,7 +124,7 @@ public class Level
 
     /**
      * return the deque that holds the path of the dungeon explorer
-     * 
+     *
      * @return the path through the dungeon
      */
     public DoublyLinkedDeque<Location> getPath()
@@ -123,7 +136,7 @@ public class Level
     /**
      * remove the wall at the current location if there is no wall, nothing
      * happens
-     * 
+     *
      * @param loc
      *            the location to remove the walls at
      */
@@ -139,7 +152,7 @@ public class Level
     /**
      * set the cell to a specific cell value If the cell is the start or the
      * goal, nothing happens
-     * 
+     *
      * @param loc
      *            the location to have the cell changed
      * @param cell
@@ -156,7 +169,7 @@ public class Level
 
     /**
      * set the goal location cannot be a wall or a hazard
-     * 
+     *
      * @param loc
      *            the location to place the goal
      */
@@ -171,7 +184,7 @@ public class Level
 
     /**
      * set the start location cannot be a wall or a hazard
-     * 
+     *
      * @param loc
      *            the location to place the start
      */
@@ -188,7 +201,7 @@ public class Level
 
     /**
      * get the value of the cell at the location
-     * 
+     *
      * @param loc
      *            the location to get the cell value
      */
@@ -201,7 +214,7 @@ public class Level
     /**
      * restart the dungeon level all path is removed and changed to open path
      * start and goal are reset to their original locations
-     * 
+     *
      * @param index
      *            the level to load
      */
@@ -216,10 +229,13 @@ public class Level
                 level1();
                 break;
             case 2:
+                level2();
                 break;
             case 3:
+                level3();
                 break;
             case 4:
+                level4();
                 break;
         }
     }
@@ -334,11 +350,47 @@ public class Level
 
 
     /**
-     * the first level
+     * Level 0
      */
-    public void level1()
+    public void level0()
     {
         setStart(new Location(1, 5));
         setGoal(new Location(5, 1));
+    }
+
+
+    /**
+     * Level 1
+     */
+    public void level1()
+    {
+        // implement level1
+    }
+
+
+    /**
+     * Level 2
+     */
+    public void level2()
+    {
+        // implement level2
+    }
+
+
+    /**
+     * Level 3
+     */
+    public void level3()
+    {
+        // implement level3
+    }
+
+
+    /**
+     * Level 4
+     */
+    public void level4()
+    {
+        // implement level4
     }
 }
