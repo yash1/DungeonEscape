@@ -11,7 +11,7 @@ import java.awt.Button;
 // -------------------------------------------------------------------------
 /**
  * The screen
- *
+ * 
  * @author Joe Bruzek, Yash Pant, Marcus Stewart
  * @version Dec 5, 2013
  */
@@ -48,7 +48,7 @@ public class DungeonEscapeScreen
     // ----------------------------------------------------------
     /**
      * Returns a string representation of the level from text files
-     *
+     * 
      * @param i
      * @return string that represents the level
      */
@@ -94,9 +94,10 @@ public class DungeonEscapeScreen
 
     }
 
+
     /**
      * return the level associated with the game
-     *
+     * 
      * @return the level
      */
     public Level getLevel()
@@ -110,27 +111,20 @@ public class DungeonEscapeScreen
      */
     public void animate()
     {
-        Location destination = level.getPath().frontItem();
-        if (destination != level.getCurrentLocation())
-        {
-            Point point = getCoordinates(destination);
-
-            if (destination.x() == level.getCurrentLocation().x())
-            {
-                // animate to point.y();
-            }
-            else
-            {
-                // animate to point.x();
-            }
-        }
+        /*
+         * Location destination = level.getPath().frontItem(); if (destination
+         * != level.getCurrentLocation()) { Point point =
+         * getCoordinates(destination); if (destination.x() ==
+         * level.getCurrentLocation().x()) { // animate to point.y(); } else {
+         * // animate to point.x(); } }
+         */
     }
 
 
     /**
      * get the x and y coordinates of a point on the screen by comparing to a
      * location
-     *
+     * 
      * @param loc
      *            the location
      * @return point the point on the screen
@@ -150,7 +144,7 @@ public class DungeonEscapeScreen
      */
     public void resetLevelClicked()
     {
-        level.restart();
+        level.restart(levelList.getCurrent().getIndex());
     }
 
 
@@ -171,5 +165,14 @@ public class DungeonEscapeScreen
     {
         levelList.previous();
         level = levelList.getCurrent();
+    }
+
+
+    /**
+     * animate backwards through the solution
+     */
+    public void animateBackwards()
+    {
+        // for later
     }
 }
