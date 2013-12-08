@@ -57,8 +57,6 @@ public class DungeonEscapeScreen
         }
 
         dimension = (getWidth() / 40);
-        player = new OvalShape(0, 0, dimension);
-        player.setFillColor(Color.blue);
 
         levelList.next();
         level = levelList.getCurrent();
@@ -102,8 +100,10 @@ public class DungeonEscapeScreen
 
         cell[level.getGoal().x()][level.getGoal().y()].setFillColor(GOAL);
 
-        add(player);
+        player = new OvalShape(0, 0, dimension);
+        player.setFillColor(Color.blue);
         player.setPosition(getCoordinates(level.getStart()));
+        add(player);
     }
 
 
@@ -215,6 +215,7 @@ public class DungeonEscapeScreen
     public void resetLevelClicked()
     {
         level.restart(getLevelString(levelList.getCurrent().getIndex()));
+        loadLevel();
     }
 
 
