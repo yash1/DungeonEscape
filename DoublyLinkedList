@@ -50,9 +50,9 @@ public class DoublyLinkedList<T>
      */
     public void clear()
     {
-        head.split();
-        head.join(tail.previous().split());
-        size = 0;
+        head = new Node<T>(null);
+        tail = new Node<T>(null);
+        head.join(tail);
         current = new Node<T>(null);
     }
 
