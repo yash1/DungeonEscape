@@ -1,18 +1,21 @@
+package com.cs2114.dungeonescape;
+
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 // -------------------------------------------------------------------------
 /**
- *  Test the Level Class
+ * Test the Level Class
  *
- *  @author Joe Bruzek, Yash Pant, Marcus Stewart
- *  @version Dec 5, 2013
+ * @author Joe Bruzek, Yash Pant, Marcus Stewart
+ * @version Dec 5, 2013
  */
 public class LevelTest
 {
 
     private Level level;
+
 
     /**
      * set up a level and put the starting cell right in the center
@@ -20,8 +23,74 @@ public class LevelTest
     @Before
     public void setUp()
     {
-        level = new Level(9);
+        level =
+            new Level("33333333333333333333311111131111111131113111111111111"
+                + "11131133111111111111111311331111111111111333113311111"
+                + "11111111111113311111111111111111133111111111111111111"
+                + "33111111111111111111333311111111111111113311111111111"
+                + "11111123311111111111111111233111133333111111112331111"
+                + "11111111131112331111111111111311123311111111111113111"
+                + "23311111111111113111233111111131111131112331111111311"
+                + "11132222333333333333333333333001099199001");
         level.setStart(new Location(4, 4));
+    }
+
+
+    /**
+     * test the resetPath method implicitly test the setCurrentLocation method
+     */
+    @Test
+    public void testResetPath()
+    {
+        level.east();
+        level.west();
+        assertEquals(3, level.getPath().size());
+        level.resetPath();
+        assertEquals(1, level.getPath().size());
+    }
+
+
+    /**
+     * test the getCurrentLocation method
+     */
+    @Test
+    public void testGetCurrentLocation()
+    {
+        assertEquals(new Location(4, 4), level.getCurrentLocation());
+    }
+
+
+    /**
+     * test the setStart and setGoal methods implicitly test the getStart and
+     * getGoal methods
+     */
+    @Test
+    public void testSetStartGoal()
+    {
+        Location start = new Location(1, 1);
+        level.setStart(start);
+        assertEquals(start, level.getStart());
+        Location goal = new Location(2, 2);
+        level.setGoal(goal);
+        assertEquals(goal, level.getGoal());
+    }
+
+
+    /**
+     * test the restart method
+     */
+    @Test
+    public void testRestart()
+    {
+        level.restart("3333333333333333333331111113111111113111311111111111"
+            + "11113113311111111111111131133111111111111133311331111"
+            + "11111111111111331111111111111111113311111111111111111"
+            + "13311111111111111111133331111111111111111331111111111"
+            + "11111112331111111111111111123311113333311111111233111"
+            + "11111111113111233111111111111131112331111111111111311"
+            + "12331111111111111311123311111113111113111233111111131"
+            + "111132222333333333333333333333001099199001");
+        assertEquals(Cell.WALL, level.getCell(new Location(0, 0)));
     }
 
 
@@ -35,7 +104,7 @@ public class LevelTest
     {
         level.east();
 
-        Location test = new Location(7, 4);
+        Location test = new Location(13, 4);
         Location test2 = new Location(4, 4);
         assertEquals(test, level.getCurrentLocation());
         level.getPath().tail();
@@ -92,7 +161,7 @@ public class LevelTest
     {
         level.south();
 
-        Location test = new Location(4, 7);
+        Location test = new Location(4, 18);
         Location test2 = new Location(4, 4);
         assertEquals(test, level.getCurrentLocation());
         level.getPath().tail();
