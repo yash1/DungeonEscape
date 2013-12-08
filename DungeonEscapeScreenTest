@@ -1,0 +1,153 @@
+package com.cs2114.dungeonescape;                                                     
+                                                                                      
+import sofia.graphics.Color;                                                          
+import android.widget.Button;                                                         
+import android.widget.TextView;                                                       
+import sofia.graphics.ShapeView;                                                      
+                                                                                      
+// -------------------------------------------------------------------------          
+/**                                                                                   
+ * This is the test class for the MazeSolverScreen                                    
+ *                                                                                    
+ * @author Yash Pant (yash1)                                                          
+ * @version 2013.10.23                                                                
+ */                                                                                   
+public class DungeonEscapeScreenTest                                                  
+    extends student.AndroidTestCase<DungeonEscapeScreen>                              
+{                                                                                     
+    // ~ Fields ................................................................      
+    private ShapeView shapeView;                                                      
+    private Button    next;                                                           
+    private Button    previous;                                                       
+    private Button    resartLevel;                                                    
+    private Button    replaySolution;                                                 
+    private int       cellSize;                                                       
+                                                                                      
+                                                                                      
+    // ~ Constructors ..........................................................      
+                                                                                      
+    // ----------------------------------------------------------                     
+    /**                                                                               
+     * Test cases that extend AndroidTestCase must have a parameterless               
+     * constructor that calls super() and passes it the screen/activity class         
+     * being tested.                                                                  
+     */                                                                               
+    public DungeonEscapeScreenTest()                                                  
+    {                                                                                 
+        super(DungeonEscapeScreen.class);                                             
+    }                                                                                 
+                                                                                      
+                                                                                      
+    // ~ Public methods ........................................................      
+                                                                                      
+    // ----------------------------------------------------------                     
+    /**                                                                               
+     * Initializes the text fixtures.                                                 
+     */                                                                               
+    public void setUp()                                                               
+    {                                                                                 
+        float viewSize = Math.min(shapeView.getWidth(), shapeView.getHeight());       
+        cellSize = (int)(viewSize / 20);                                              
+    }                                                                                 
+                                                                                      
+    public void testDungeon2Failed() {                                                
+                                                                                      
+                                                                                      
+                                                                                      
+    }                                                                                 
+                                                                                      
+    /**                                                                               
+     * Tests the solution to dungeon 5                                                
+     */                                                                               
+  public void testDungeon5Solved()                                                    
+  {                                                                                   
+      //move to the right dungeon                                                     
+      click(previous);                                                                
+      //move #1                                                                       
+      swipeDown();                                                                    
+      //move #2                                                                       
+      swipeLeft();                                                                    
+      //move #3                                                                       
+      swipeDown();                                                                    
+      //move #4                                                                       
+      swipeRight();                                                                   
+      //move #5                                                                       
+      swipeDown();                                                                    
+      //move #6                                                                       
+      swipeRight();                                                                   
+      //move #7                                                                       
+      swipeDown();                                                                    
+      //move #8                                                                       
+      swipeRight();                                                                   
+      //move #9                                                                       
+      swipeDown();                                                                    
+      //move #10                                                                      
+      swipeLeft();                                                                    
+      //move #11                                                                      
+      swipeDown();                                                                    
+      //assert game won                                                               
+      //assertEquals();                                                               
+                                                                                      
+                                                                                      
+                                                                                      
+  }                                                                                   
+                                                                                      
+                                                                                      
+    // ~ Private methods .......................................................      
+    private void swipeLeft() {                                                        
+        touchDownCell(9, 6);                                                          
+        touchMoveCell(4, 6);                                                          
+        touchUp();                                                                    
+    }                                                                                 
+                                                                                      
+    private void swipeRight() {                                                       
+        touchDownCell(1, 11);                                                         
+        touchMoveCell(4,11);                                                          
+        touchUp();                                                                    
+                                                                                      
+    }                                                                                 
+                                                                                      
+    private void swipeUp() {                                                          
+        touchDownCell(5, 5);                                                          
+        touchMoveCell(5, 2);                                                          
+        touchUp();                                                                    
+    }                                                                                 
+    private void swipeDown() {                                                        
+        touchDownCell(9, 1);                                                          
+        touchMoveCell(9, 4);                                                          
+        touchUp();                                                                    
+    }                                                                                 
+                                                                                      
+    // ----------------------------------------------------------                     
+    /**                                                                               
+     * Simulates touching down on the middle of the specified cell in the maze.       
+     */                                                                               
+    private void touchDownCell(int x, int y)                                          
+    {                                                                                 
+        touchDown(shapeView, (x + 0.5f) * cellSize, (y + 0.5f) * cellSize);           
+    }                                                                                 
+                                                                                      
+                                                                                      
+    // ----------------------------------------------------------                     
+    /**                                                                               
+     * Simulates moving the finger instantaneously to the middle of the               
+     * specified cell in the maze.                                                    
+     */                                                                               
+    private void touchMoveCell(int x, int y)                                          
+    {                                                                                 
+        touchMove((x + 0.5f) * cellSize, (y + 0.5f) * cellSize);                      
+    }                                                                                 
+                                                                                      
+                                                                                      
+    /**                                                                               
+     * Simulates clicking the middle of the specified cell in the maze. This is       
+     * equivalent to calling: touchDownCell(x, y); touchUp();                         
+     */                                                                               
+    private void clickCell(int x, int y)                                              
+    {                                                                                 
+        touchDownCell(x, y);                                                          
+        touchUp();                                                                    
+    }                                                                                 
+                                                                                      
+}                                                                                     
+                                                                                      
