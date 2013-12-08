@@ -1,4 +1,6 @@
-package com.cs2114.dungeonEscape;
+package com.cs2114.dungeonescape;
+
+import sofia.graphics.Color;
 
 // -------------------------------------------------------------------------
 /**
@@ -14,23 +16,19 @@ public class Level
     private Location                   start;
     private Location                   goal;
     private Cell[][]                   dungeon;
-    private int                        size;
     private DoublyLinkedList<Location> path;
     private int                        index;
-    private String                     level;
 
 
     // ----------------------------------------------------------
     /**
      * Create a new Level object.
      *
-     * @param size
-     *            the size of the level
+     * @param level
+     *            a string representation of the level
      */
     public Level(String level)
     {
-        this.level = level;
-        this.size = 20;
         dungeon = new Cell[20][20];
 
         for (int y = 0; y < 20; y++)
@@ -54,8 +52,23 @@ public class Level
             }
         }
 
-        start = new Location(level.charAt(401), level.charAt(401));
-        goal = new Location(level.charAt(402), level.charAt(403));
+        start =
+            new Location(
+                Character.getNumericValue(level.charAt(400))
+                    + Character.getNumericValue(level.charAt(401))
+                    + Character.getNumericValue(level.charAt(402)),
+                Character.getNumericValue(level.charAt(403))
+                    + Character.getNumericValue(level.charAt(404))
+                    + Character.getNumericValue(level.charAt(405)));
+
+        goal =
+            new Location(
+                Character.getNumericValue(level.charAt(406))
+                    + Character.getNumericValue(level.charAt(407))
+                    + Character.getNumericValue(level.charAt(408)),
+                Character.getNumericValue(level.charAt(409))
+                    + Character.getNumericValue(level.charAt(410))
+                    + Character.getNumericValue(level.charAt(411)));
 
         currentLocation = start;
         path = new DoublyLinkedList<Location>();
@@ -110,6 +123,29 @@ public class Level
     public Location getCurrentLocation()
     {
         return currentLocation;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * gets the starting location for this level
+     *
+     * @return the location of the start
+     */
+    public Location getStart()
+    {
+        return start;
+    }
+
+
+    /**
+     * gets the goal location for this level
+     *
+     * @return the location of the goal
+     */
+    public Location getGoal()
+    {
+        return goal;
     }
 
 
@@ -207,10 +243,10 @@ public class Level
      * restart the dungeon level all path is removed and changed to open path
      * start and goal are reset to their original locations
      *
-     * @param index
-     *            the level to load
+     * @param level
+     *            sting representation of the level
      */
-    public void restart(int index)
+    public void restart(String level)
     {
         for (int y = 0; y < 20; y++)
         {
@@ -252,16 +288,17 @@ public class Level
 
         while (temp)
         {
-            Cell next = getCell(new Location(x + 1, y));
-            if (next != Cell.HAZARD && next != Cell.WALL)
-            {
-                x++;
-            }
-            else
+            if ((x == goal.x() && y == goal.y())
+                || getCell(new Location(x + 1, y)).equals(Cell.WALL))
             {
                 path.add(new Location(x, y));
                 currentLocation = new Location(x, y);
                 temp = false;
+                x++;
+            }
+            else
+            {
+                x++;
             }
         }
     }
@@ -279,16 +316,17 @@ public class Level
 
         while (temp)
         {
-            Cell next = getCell(new Location(x - 1, y));
-            if (next != Cell.HAZARD && next != Cell.WALL)
-            {
-                x--;
-            }
-            else
+            if ((x == goal.x() && y == goal.y())
+                || getCell(new Location(x - 1, y)).equals(Cell.WALL))
             {
                 path.add(new Location(x, y));
                 currentLocation = new Location(x, y);
                 temp = false;
+                x--;
+            }
+            else
+            {
+                x--;
             }
         }
     }
@@ -306,16 +344,16 @@ public class Level
 
         while (temp)
         {
-            Cell next = getCell(new Location(x, y - 1));
-            if (next != Cell.HAZARD && next != Cell.WALL)
-            {
-                y--;
-            }
-            else
+            if ((x == goal.x() && y == goal.y())
+                || getCell(new Location(x, y - 1)).equals(Cell.WALL))
             {
                 path.add(new Location(x, y));
                 currentLocation = new Location(x, y);
                 temp = false;
+            }
+            else
+            {
+                y--;
             }
         }
     }
@@ -333,19 +371,18 @@ public class Level
 
         while (temp)
         {
-            Cell next = getCell(new Location(x, y + 1));
-            if (next != Cell.HAZARD && next != Cell.WALL)
-            {
-                y++;
-            }
-            else
+            if ((x == goal.x() && y == goal.y())
+                || getCell(new Location(x, y + 1)).equals(Cell.WALL))
             {
                 path.add(new Location(x, y));
                 currentLocation = new Location(x, y);
                 temp = false;
             }
+            else
+            {
+                y++;
+            }
         }
     }
-
 
 }
