@@ -1,3 +1,4 @@
+package com.cs2114.dungeonescape;
 
 /**
  * A doubly linked list of nodes
@@ -23,6 +24,7 @@ public class DoublyLinkedList<T>
         head = new Node<T>(null);
         tail = new Node<T>(null);
         head.join(tail);
+        current = new Node<T>(null);
     }
 
 
@@ -38,6 +40,7 @@ public class DoublyLinkedList<T>
         Node<T> temp2 = tail.previous();
         temp.join(temp2.split());
         temp2.join(temp);
+        current = temp;
         size++;
     }
 
@@ -50,6 +53,7 @@ public class DoublyLinkedList<T>
         head.split();
         head.join(tail.previous().split());
         size = 0;
+        current = new Node<T>(null);
     }
 
 
@@ -79,6 +83,17 @@ public class DoublyLinkedList<T>
     public void tail()
     {
         current = tail;
+    }
+
+
+    /**
+     * return the front item of the list
+     *
+     * @return the front item
+     */
+    public T frontItem()
+    {
+        return tail.previous().data();
     }
 
 
