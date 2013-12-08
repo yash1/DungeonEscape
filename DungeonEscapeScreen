@@ -27,6 +27,7 @@ public class DungeonEscapeScreen
     private float                     height;
     private float                     dimension;
     private OvalShape                 player;
+    private boolean                   moving = false;
 
     private final Color               START  = Color.yellow;
     private final Color               GOAL   = Color.green;
@@ -186,7 +187,9 @@ public class DungeonEscapeScreen
         {
             PointF point = getCoordinates(destination);
 
-            player.animate(1000).position(point).play();
+            moving = true;
+            player.animate(500).position(point).play();
+            moving = false;
         }
     }
 
@@ -228,8 +231,11 @@ public class DungeonEscapeScreen
 
     /**
      * sets the x and y of when you touch the screen
-     * @param x the x of where you touch down
-     * @param y the y of where you touch down
+     *
+     * @param x
+     *            the x of where you touch down
+     * @param y
+     *            the y of where you touch down
      */
     public void onTouchDown(float x, float y)
     {
@@ -240,33 +246,39 @@ public class DungeonEscapeScreen
 
     /**
      * determines which direction you swiped
-     * @param x the x where you touch up
-     * @param y the y where you touch up
+     *
+     * @param x
+     *            the x where you touch up
+     * @param y
+     *            the y where you touch up
      */
     public void onTouchUp(float x, float y)
     {
-        upX = x;
-        upY = y;
-        float xDiff = upX - downX;
-        float yDiff = upY - downY;
-        if (xDiff > 0 && Math.abs(yDiff) < width * 2)
+        if (!moving)
         {
-            levelList.getCurrent().east();
-        }
-        else if (xDiff < 0 && Math.abs(yDiff) < width * 2)
-        {
-            levelList.getCurrent().west();
-        }
-        else if (yDiff > 0 && Math.abs(xDiff) < width * 2)
-        {
-            levelList.getCurrent().south();
-        }
-        else if (yDiff < 0 && Math.abs(xDiff) < width * 2)
-        {
-            levelList.getCurrent().north();
-        }
+            upX = x;
+            upY = y;
+            float xDiff = upX - downX;
+            float yDiff = upY - downY;
+            if (xDiff > 0 && Math.abs(yDiff) < width * 2)
+            {
+                levelList.getCurrent().east();
+            }
+            else if (xDiff < 0 && Math.abs(yDiff) < width * 2)
+            {
+                levelList.getCurrent().west();
+            }
+            else if (yDiff > 0 && Math.abs(xDiff) < width * 2)
+            {
+                levelList.getCurrent().south();
+            }
+            else if (yDiff < 0 && Math.abs(xDiff) < width * 2)
+            {
+                levelList.getCurrent().north();
+            }
 
-        animate();
+            animate();
+        }
     }
 
 
