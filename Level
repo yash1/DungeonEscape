@@ -75,6 +75,15 @@ public class Level
         path.add(currentLocation);
     }
 
+    /**
+     * reset the path
+     */
+    public void resetPath()
+    {
+        path = new DoublyLinkedList<Location>();
+        setCurrentLocation(start);
+    }
+
 
     /**
      * return the index of the current maze
@@ -272,6 +281,7 @@ public class Level
         start = new Location(level.charAt(401), level.charAt(401));
         goal = new Location(level.charAt(402), level.charAt(403));
 
+        path.clear();
         currentLocation = start;
     }
 
