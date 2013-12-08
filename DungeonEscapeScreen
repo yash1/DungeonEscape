@@ -1,5 +1,7 @@
 package com.cs2114.dungeonescape;
 
+import java.io.IOException;
+import android.media.MediaPlayer;
 import sofia.graphics.ShapeView;
 import android.widget.Button;
 import sofia.graphics.OvalShape;
@@ -29,13 +31,16 @@ public class DungeonEscapeScreen
     private float                     height;
     private float                     dimension;
     private OvalShape                 player;
-    private boolean                   movable = true;
-    private boolean                   won     = false;
+    private boolean                   movable        = true;
+    private boolean                   won            = false;
     private Button                    replay;
-    private final Color               GOAL    = Color.green;
-    private final Color               OPEN    = Color.gray;
-    private final Color               HAZARD  = Color.red;
-    private final Color               WALL    = Color.black;
+    private final int                 ANIMATION_TIME = 100;
+    private final int                 SWIPE_TOLERANCE = 8;
+    private MediaPlayer               mp;
+    private final Color               GOAL           = Color.green;
+    private final Color               OPEN           = Color.gray;
+    private final Color               HAZARD         = Color.red;
+    private final Color               WALL           = Color.black;
     private float                     downX;
     private float                     downY;
     private float                     upX;
@@ -64,6 +69,20 @@ public class DungeonEscapeScreen
         level = levelList.getCurrent();
 
         loadLevel();
+        mp = MediaPlayer.create(getApplicationContext(), R.raw.gamemusic);
+        try
+        {
+            mp.prepare();
+        }
+        catch (IllegalStateException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        mp.start();
     }
 
 
@@ -195,7 +214,7 @@ public class DungeonEscapeScreen
         {
             PointF point = getCoordinates(destination);
 
-            player.animate(500).position(point).play();
+            player.animate(ANIMATION_TIME).position(point).play();
         }
         checkWin();
         checkHazard();
@@ -274,9 +293,11 @@ public class DungeonEscapeScreen
      *            the x of where you touch down
      * @param y
      *            the y of where you touch down
+     * @throws InterruptedException
      */
-    public void onTouchDown(float x, float y)
+    public void onTouchDown(float x, float y) throws InterruptedException
     {
+        Thread.sleep(ANIMATION_TIME);
         downX = x;
         downY = y;
     }
@@ -289,28 +310,30 @@ public class DungeonEscapeScreen
      *            the x where you touch up
      * @param y
      *            the y where you touch up
+     * @throws InterruptedException
      */
-    public void onTouchUp(float x, float y)
+    public void onTouchUp(float x, float y) throws InterruptedException
     {
+        Thread.sleep(ANIMATION_TIME);
         if (movable)
         {
             upX = x;
             upY = y;
             float xDiff = upX - downX;
             float yDiff = upY - downY;
-            if (xDiff > 0 && Math.abs(yDiff) < width * 2)
+            if (xDiff > 0 && Math.abs(yDiff) < width * SWIPE_TOLERANCE)
             {
                 levelList.getCurrent().east();
             }
-            else if (xDiff < 0 && Math.abs(yDiff) < width * 2)
+            else if (xDiff < 0 && Math.abs(yDiff) < width * SWIPE_TOLERANCE)
             {
                 levelList.getCurrent().west();
             }
-            else if (yDiff > 0 && Math.abs(xDiff) < width * 2)
+            else if (yDiff > 0 && Math.abs(xDiff) < width * SWIPE_TOLERANCE)
             {
                 levelList.getCurrent().south();
             }
-            else if (yDiff < 0 && Math.abs(xDiff) < width * 2)
+            else if (yDiff < 0 && Math.abs(xDiff) < width * SWIPE_TOLERANCE)
             {
                 levelList.getCurrent().north();
             }
