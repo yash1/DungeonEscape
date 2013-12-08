@@ -32,7 +32,6 @@ public class DungeonEscapeScreen
     private boolean                   movable = true;
     private boolean                   won     = false;
     private Button                    replay;
-    private ShapeView                 shapeView;
     private final Color               GOAL    = Color.green;
     private final Color               OPEN    = Color.gray;
     private final Color               HAZARD  = Color.red;
@@ -77,6 +76,7 @@ public class DungeonEscapeScreen
         level.resetPath();
         replay.setEnabled(false);
         won = false;
+        movable = true;
         for (int i = 0; i < 20; i++)
         {
             for (int j = 0; j < 20; j++)
@@ -184,11 +184,13 @@ public class DungeonEscapeScreen
 
     /**
      * animate the motion of the player
+     *
+     * @param loc
+     *            the location to travel to
      */
-    private void animate()
+    private void animate(Location loc)
     {
-        shapeView.setEnabled(false);
-        Location destination = level.getPath().frontItem();
+        Location destination = loc;
         if (destination != level.getCurrentLocation())
         {
             PointF point = getCoordinates(destination);
@@ -197,7 +199,6 @@ public class DungeonEscapeScreen
         }
         checkWin();
         checkHazard();
-        shapeView.setEnabled(true);
     }
 
 
@@ -314,7 +315,7 @@ public class DungeonEscapeScreen
                 levelList.getCurrent().north();
             }
 
-            animate();
+            animate(level.getPath().frontItem());
         }
     }
 
@@ -331,10 +332,43 @@ public class DungeonEscapeScreen
 
 
     /**
-     * animate backwards through the solution
+     * replay the solution when the replay solution button is clicked
      */
-    public void animateBackwards()
+    public void replayClicked()
     {
-        // for later
+        movable = true;
+
+        DoublyLinkedList<Location> thePath = level.getPath();
+        // move to the end of the path
+        thePath.tail();
+
+        // iterate backwards through the path
+        while (thePath.hasPrevious())
+        {
+            animate(thePath.previous());
+            try
+            {
+                Thread.sleep(600);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        thePath.head();
+        while (thePath.hasNext())
+        {
+            animate(thePath.next());
+            try
+            {
+                Thread.sleep(600);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        movable = false;
     }
 }
