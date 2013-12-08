@@ -1,79 +1,149 @@
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import sun.misc.IOUtils;
-import java.io.StringWriter;
-import java.io.InputStream;
+package com.cs2114.dungeonescape;
+
+import sofia.graphics.OvalShape;
+import android.graphics.PointF;
+import sofia.graphics.Color;
+import sofia.graphics.RectangleShape;
+import sofia.app.ShapeScreen;
 import android.content.res.AssetManager;
-import sofia.app.Screen;
-import java.awt.Point;
-import java.awt.Button;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 // -------------------------------------------------------------------------
 /**
  * The screen
- * 
+ *
  * @author Joe Bruzek, Yash Pant, Marcus Stewart
  * @version Dec 5, 2013
  */
 public class DungeonEscapeScreen
-    extends Screen
+    extends ShapeScreen
 {
     private CircularLinkedList<Level> levelList;
     private Level                     level;
-    private Button                    resetLevel;
-    private Button                    next;
-    private Button                    previous;
-    private int                       size;
+    private RectangleShape[][]        cell;
+    private float                     width;
+    private float                     height;
+    private float                     dimension;
+    private OvalShape                 player;
+
+    private final Color               START  = Color.yellow;
+    private final Color               GOAL   = Color.green;
+    private final Color               OPEN   = Color.gray;
+    private final Color               HAZARD = Color.red;
+    private final Color               WALL   = Color.black;
+    private float                     downX;
+    private float                     downY;
+    private float                     upX;
+    private float                     upY;
 
 
     /**
-     * Create a new DungeonEscapeScreen object.
+     * Initializes DungeonEscapeScreen.
      */
-    public DungeonEscapeScreen()
+    public void initialize()
     {
-
         levelList = new CircularLinkedList<Level>();
+
+        cell = new RectangleShape[20][20];
+        width = Math.min(getWidth(), getHeight()) / 20;
+        height = Math.min(getWidth(), getHeight()) / 20;
 
         for (int i = 0; i < 5; i++)
         {
             levelList.add(new Level(getLevelString(i)));
         }
-        levelList.next();
 
+        dimension = (getWidth() / 40);
+        player = new OvalShape(0, 0, dimension);
+        player.setFillColor(Color.blue);
+
+        levelList.next();
         level = levelList.getCurrent();
 
+        loadLevel();
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Loads the current level onto the screen
+     */
+    public void loadLevel()
+    {
+
+        for (int i = 0; i < 20; i++)
+        {
+            for (int j = 0; j < 20; j++)
+            {
+                cell[i][j] =
+                    new RectangleShape(
+                        i * width,
+                        j * height,
+                        (i + 1) * width,
+                        (j + 1) * height);
+                if (level.getCell(new Location(i, j)).equals(Cell.WALL))
+                {
+                    cell[i][j].setFillColor(WALL);
+                }
+                else if (level.getCell(new Location(i, j)).equals(Cell.HAZARD))
+                {
+                    cell[i][j].setFillColor(HAZARD);
+                }
+                else
+                {
+                    cell[i][j].setFillColor(OPEN);
+                }
+                add(cell[i][j]);
+            }
+        }
+
+        cell[level.getGoal().x()][level.getGoal().y()].setFillColor(GOAL);
+
+        add(player);
+        player.setPosition(getCoordinates(level.getStart()));
     }
 
 
     // ----------------------------------------------------------
     /**
      * Returns a string representation of the level from text files
-     * 
+     *
      * @param i
      * @return string that represents the level
      */
     public String getLevelString(int i)
     {
         String levelString = null;
-        String fileName;
+        String fileName = null;
+        int index = i;
 
-        switch (i)
+        switch (index)
         {
             case 0:
                 fileName = "level1.txt";
+                break;
             case 1:
                 fileName = "level2.txt";
+                break;
             case 2:
                 fileName = "level3.txt";
+                break;
             case 3:
                 fileName = "level4.txt";
+                break;
             case 4:
                 fileName = "level5.txt";
+                break;
+            default:
+                break;
         }
+
         AssetManager am = getAssets();
         try
         {
-            InputStream is = am.open(levelString);
+            InputStream is = am.open(fileName);
             BufferedReader reader =
                 new BufferedReader(new InputStreamReader(is));
             StringBuilder out = new StringBuilder();
@@ -97,7 +167,7 @@ public class DungeonEscapeScreen
 
     /**
      * return the level associated with the game
-     * 
+     *
      * @return the level
      */
     public Level getLevel()
@@ -111,31 +181,28 @@ public class DungeonEscapeScreen
      */
     public void animate()
     {
-        /*
-         * Location destination = level.getPath().frontItem(); if (destination
-         * != level.getCurrentLocation()) { Point point =
-         * getCoordinates(destination); if (destination.x() ==
-         * level.getCurrentLocation().x()) { // animate to point.y(); } else {
-         * // animate to point.x(); } }
-         */
+        Location destination = level.getPath().frontItem();
+        if (destination != level.getCurrentLocation())
+        {
+            PointF point = getCoordinates(destination);
+
+            player.animate(1000).position(point).play();
+        }
     }
 
 
     /**
      * get the x and y coordinates of a point on the screen by comparing to a
-     * location
-     * 
+     * location, returns a PointF object
+     *
      * @param loc
      *            the location
-     * @return point the point on the screen
+     * @return the point on the screen
      */
-    public Point getCoordinates(Location loc)
+    public PointF getCoordinates(Location loc)
     {
-        // To do -
-        // (location.x / size) * width of the level on the screen
-        // (location.y / size) * height of the level + buffer
-        // new Point with the above coordinates
-        return null;
+        int size = (int)Math.min(getWidth(), getHeight()) / 20;
+        return new PointF((loc.x() + 0.5f) * size, (loc.y() + 0.5f) * size);
     }
 
 
@@ -144,17 +211,62 @@ public class DungeonEscapeScreen
      */
     public void resetLevelClicked()
     {
-        level.restart(levelList.getCurrent().getIndex());
+        level.restart(getLevelString(levelList.getCurrent().getIndex()));
     }
 
 
     /**
      * move to the next level
      */
-    private void nextClicked()
+    public void nextClicked()
     {
         levelList.next();
         level = levelList.getCurrent();
+        loadLevel();
+    }
+
+
+    /**
+     * sets the x and y of when you touch the screen
+     * @param x the x of where you touch down
+     * @param y the y of where you touch down
+     */
+    public void onTouchDown(float x, float y)
+    {
+        downX = x;
+        downY = y;
+    }
+
+
+    /**
+     * determines which direction you swiped
+     * @param x the x where you touch up
+     * @param y the y where you touch up
+     */
+    public void onTouchUp(float x, float y)
+    {
+        upX = x;
+        upY = y;
+        float xDiff = upX - downX;
+        float yDiff = upY - downY;
+        if (xDiff > 0 && Math.abs(yDiff) < width * 2)
+        {
+            levelList.getCurrent().east();
+        }
+        else if (xDiff < 0 && Math.abs(yDiff) < width * 2)
+        {
+            levelList.getCurrent().west();
+        }
+        else if (yDiff > 0 && Math.abs(xDiff) < width * 2)
+        {
+            levelList.getCurrent().south();
+        }
+        else if (yDiff < 0 && Math.abs(xDiff) < width * 2)
+        {
+            levelList.getCurrent().north();
+        }
+
+        animate();
     }
 
 
@@ -165,6 +277,7 @@ public class DungeonEscapeScreen
     {
         levelList.previous();
         level = levelList.getCurrent();
+        loadLevel();
     }
 
 
