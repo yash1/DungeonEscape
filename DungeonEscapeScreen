@@ -1,5 +1,6 @@
 package com.cs2114.dungeonescape;
 
+import android.widget.Button;
 import sofia.graphics.OvalShape;
 import android.graphics.PointF;
 import sofia.graphics.Color;
@@ -27,13 +28,13 @@ public class DungeonEscapeScreen
     private float                     height;
     private float                     dimension;
     private OvalShape                 player;
-    private boolean                   moving = false;
-
-    private final Color               START  = Color.yellow;
-    private final Color               GOAL   = Color.green;
-    private final Color               OPEN   = Color.gray;
-    private final Color               HAZARD = Color.red;
-    private final Color               WALL   = Color.black;
+    private boolean                   movable = true;
+    private boolean                   won     = false;
+    private Button                    replay;
+    private final Color               GOAL    = Color.green;
+    private final Color               OPEN    = Color.gray;
+    private final Color               HAZARD  = Color.red;
+    private final Color               WALL    = Color.black;
     private float                     downX;
     private float                     downY;
     private float                     upX;
@@ -71,7 +72,8 @@ public class DungeonEscapeScreen
      */
     public void loadLevel()
     {
-
+        replay.setEnabled(false);
+        won = false;
         for (int i = 0; i < 20; i++)
         {
             for (int j = 0; j < 20; j++)
@@ -178,18 +180,37 @@ public class DungeonEscapeScreen
 
 
     /**
-     * animate
+     * animate the motion of the player
      */
-    public void animate()
+    private void animate()
     {
         Location destination = level.getPath().frontItem();
         if (destination != level.getCurrentLocation())
         {
             PointF point = getCoordinates(destination);
 
-            moving = true;
+            movable = false;
             player.animate(500).position(point).play();
-            moving = false;
+            movable = true;
+        }
+        checkWin();
+    }
+
+
+    /**
+     * check to see if the player has hit the finish of the maze
+     */
+    private void checkWin()
+    {
+        if (level.getPath().frontItem().equals(level.getGoal()))
+        {
+            replay.setEnabled(true);
+            won = true;
+        }
+
+        if (won)
+        {
+            movable = false;
         }
     }
 
@@ -255,7 +276,7 @@ public class DungeonEscapeScreen
      */
     public void onTouchUp(float x, float y)
     {
-        if (!moving)
+        if (movable)
         {
             upX = x;
             upY = y;
