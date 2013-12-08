@@ -1,3 +1,6 @@
+package com.cs2114.dungeonescape;
+
+
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,5 +55,53 @@ public class DoublyLinkedListTest
         assertEquals(3, list.size());
         list.clear();
         assertEquals(0, list.size());
+    }
+
+    /*
+     * test the list when you traverse from the tail
+     */
+    @Test
+    public void testTailTraversal()
+    {
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        assertEquals(3, list.size());
+        list.tail();
+        assertTrue(list.hasPrevious());
+        assertEquals("3", list.previous());
+        assertEquals("2", list.previous());
+        assertEquals("1", list.previous());
+        assertFalse(list.hasPrevious());
+    }
+
+    /**
+     * test the list when you traverse from the head
+     */
+    @Test
+    public void testHeadTraversal()
+    {
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        assertEquals(3, list.size());
+        list.head();
+        assertTrue(list.hasNext());
+        assertEquals("1", list.next());
+        assertEquals("2", list.next());
+        assertEquals("3", list.next());
+        assertFalse(list.hasNext());
+    }
+
+    /**
+     * test the frontItem method
+     */
+    @Test
+    public void testFrontItem()
+    {
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        assertEquals("3", list.frontItem());
     }
 }
