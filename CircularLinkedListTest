@@ -1,3 +1,6 @@
+package com.cs2114.dungeonescape;
+
+
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,6 +72,36 @@ public class CircularLinkedListTest
         assertEquals(2, test.size());
         test.remove();
         assertEquals(1, test.size());
+    }
+
+    /**
+     * test the next method
+     * Implicitly test the getCurrent method
+     */
+    @Test
+    public void testNext()
+    {
+        test.add("1");
+        test.add("2");
+        test.add("3");
+        assertEquals("3", test.getCurrent());
+        test.next();
+        assertEquals("1", test.getCurrent());
+    }
+
+    /**
+     * test the previous method
+     * Implicitly test the getCurrent method
+     */
+    @Test
+    public void testPrevious()
+    {
+        test.add("1");
+        test.add("2");
+        test.add("3");
+        assertEquals("3", test.getCurrent());
+        test.previous();
+        assertEquals("2", test.getCurrent());
     }
 
 
