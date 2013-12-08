@@ -1,5 +1,6 @@
 package com.cs2114.dungeonescape;
 
+
 /**
  * A doubly linked list of nodes
  *
@@ -54,6 +55,7 @@ public class DoublyLinkedList<T>
         tail = new Node<T>(null);
         head.join(tail);
         current = new Node<T>(null);
+        size = 0;
     }
 
 
