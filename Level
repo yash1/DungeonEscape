@@ -1,6 +1,6 @@
 package com.cs2114.dungeonescape;
 
-import sofia.graphics.Color;
+
 
 // -------------------------------------------------------------------------
 /**
@@ -17,7 +17,6 @@ public class Level
     private Location                   goal;
     private Cell[][]                   dungeon;
     private DoublyLinkedList<Location> path;
-    private int                        index;
 
 
     // ----------------------------------------------------------
@@ -75,6 +74,7 @@ public class Level
         path.add(currentLocation);
     }
 
+
     /**
      * reset the path
      */
@@ -82,32 +82,6 @@ public class Level
     {
         path = new DoublyLinkedList<Location>();
         setCurrentLocation(start);
-    }
-
-
-    /**
-     * return the index of the current maze
-     *
-     * @return the index of the maze
-     */
-    public int getIndex()
-    {
-        return index;
-    }
-
-
-    /**
-     * place a wall at the location
-     *
-     * @param loc
-     *            the location to place a new wall
-     */
-    public void placeWalls(Location loc)
-    {
-        if (!loc.equals(start) && !loc.equals(goal))
-        {
-            dungeon[loc.x()][loc.y()] = Cell.WALL;
-        }
     }
 
 
@@ -135,7 +109,6 @@ public class Level
     }
 
 
-    // ----------------------------------------------------------
     /**
      * gets the starting location for this level
      *
@@ -166,22 +139,6 @@ public class Level
     public DoublyLinkedList<Location> getPath()
     {
         return path;
-    }
-
-
-    /**
-     * remove the wall at the current location if there is no wall, nothing
-     * happens
-     *
-     * @param loc
-     *            the location to remove the walls at
-     */
-    public void removeWalls(Location loc)
-    {
-        if (dungeon[loc.x()][loc.y()] == Cell.WALL)
-        {
-            dungeon[loc.x()][loc.y()] = Cell.OPEN_PATH;
-        }
     }
 
 
