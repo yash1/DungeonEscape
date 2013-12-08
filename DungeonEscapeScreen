@@ -1,5 +1,6 @@
 package com.cs2114.dungeonescape;
 
+import sofia.graphics.ShapeView;
 import android.widget.Button;
 import sofia.graphics.OvalShape;
 import android.graphics.PointF;
@@ -31,6 +32,7 @@ public class DungeonEscapeScreen
     private boolean                   movable = true;
     private boolean                   won     = false;
     private Button                    replay;
+    private ShapeView                 shapeView;
     private final Color               GOAL    = Color.green;
     private final Color               OPEN    = Color.gray;
     private final Color               HAZARD  = Color.red;
@@ -72,6 +74,7 @@ public class DungeonEscapeScreen
      */
     public void loadLevel()
     {
+        level.resetPath();
         replay.setEnabled(false);
         won = false;
         for (int i = 0; i < 20; i++)
@@ -184,16 +187,17 @@ public class DungeonEscapeScreen
      */
     private void animate()
     {
+        shapeView.setEnabled(false);
         Location destination = level.getPath().frontItem();
         if (destination != level.getCurrentLocation())
         {
             PointF point = getCoordinates(destination);
 
-            movable = false;
             player.animate(500).position(point).play();
-            movable = true;
         }
         checkWin();
+        checkHazard();
+        shapeView.setEnabled(true);
     }
 
 
@@ -211,6 +215,18 @@ public class DungeonEscapeScreen
         if (won)
         {
             movable = false;
+        }
+    }
+
+
+    /**
+     * check to see if the player hit a hazard
+     */
+    public void checkHazard()
+    {
+        if (level.getCell(level.getPath().frontItem()) == Cell.HAZARD)
+        {
+            loadLevel();
         }
     }
 
@@ -235,7 +251,6 @@ public class DungeonEscapeScreen
      */
     public void resetLevelClicked()
     {
-        level.restart(getLevelString(levelList.getCurrent().getIndex()));
         loadLevel();
     }
 
